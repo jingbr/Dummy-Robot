@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">PureAdBlock</string>
+    <string name="subtitle">本地 VPN 广告拦截，无需 Root</string>
+    <string name="label_protection">广告拦截保护</string>
+    <string name="status_active">正在保护中，广告拦截已开启</string>
+    <string name="status_inactive">保护未开启，点击开关启用</string>
+    <string name="blocked_count">已拦截广告请求：%1$d</string>
+    <string name="blocked_count_zero">已拦截广告请求：0</string>
+    <string name="note_permission">首次开启需要授权创建 VPN 连接。本应用的 VPN 仅用于本机过滤 DNS 请求，不会将您的流量转发到任何远程服务器。</string>
+    <string name="notification_title">PureAdBlock 运行中</string>
+    <string name="notification_text">正在拦截广告与跟踪请求</string>
+</resources>
