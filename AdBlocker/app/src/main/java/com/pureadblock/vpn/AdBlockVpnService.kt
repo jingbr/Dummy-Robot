@@ -14,6 +14,7 @@ import com.pureadblock.MainActivity
 import com.pureadblock.R
 import com.pureadblock.dns.DnsPacket
 import com.pureadblock.hosts.HostsManager
+import com.pureadblock.log.QueryLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -148,11 +149,15 @@ class AdBlockVpnService : VpnService() {
                 val query = DnsPacket(dnsPayload)
                 val domain = query.queryDomain
 
-                if (domain != null && HostsManager.getInstance().isBlocked(domain)) {
-                    val nxdomain = DnsPacket.buildNxDomainResponse(dnsPayload.duplicate())
-                    sendDnsResponse(fileOut, parsed, nxdomain)
-                    blockedCount++
-                    continue
+                if (domain != null) {
+                    val blocked = HostsManager.getInstance().isBlocked(domain)
+                    QueryLog.getInstance().add(domain, blocked)
+                    if (blocked) {
+                        val nxdomain = DnsPacket.buildNxDomainResponse(dnsPayload.duplicate())
+                        sendDnsResponse(fileOut, parsed, nxdomain)
+                        blockedCount++
+                        continue
+                    }
                 }
 
                 // Forward to upstream DNS and relay the answer back.

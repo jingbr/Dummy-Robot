@@ -9,4 +9,8 @@
     <string name="note_permission">首次开启需要授权创建 VPN 连接。本应用的 VPN 仅用于本机过滤 DNS 请求，不会将您的流量转发到任何远程服务器。</string>
     <string name="notification_title">PureAdBlock 运行中</string>
     <string name="notification_text">正在拦截广告与跟踪请求</string>
+    <string name="label_query_log">DNS 查询日志</string>
+    <string name="action_clear_log">清空</string>
+    <string name="toast_blocked_added">已加入黑名单：%1$s</string>
+    <string name="hint_click_to_block">点击放行条目可将其加入黑名单</string>
 </resources>

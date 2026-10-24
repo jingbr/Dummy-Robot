@@ -5,18 +5,26 @@ import android.net.VpnService
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.pureadblock.databinding.ActivityMainBinding
+import com.pureadblock.hosts.HostsManager
+import com.pureadblock.log.QueryLog
+import com.pureadblock.log.QueryLogAdapter
 import com.pureadblock.vpn.AdBlockVpnService
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val handler = Handler(Looper.getMainLooper())
+    private val logAdapter = QueryLogAdapter { domain -> addToBlocklist(domain) }
+
     private val updateRunnable = object : Runnable {
         override fun run() {
             updateStats()
+            updateLog()
             handler.postDelayed(this, 1000)
         }
     }
@@ -35,6 +43,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.recyclerLog.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = logAdapter
+        }
+
+        binding.btnClearLog.setOnClickListener {
+            QueryLog.getInstance().clear()
+            updateLog()
+        }
 
         binding.switchVpn.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -85,5 +103,19 @@ class MainActivity : AppCompatActivity() {
             R.string.blocked_count,
             AdBlockVpnService.blockedCount
         )
+    }
+
+    private fun updateLog() {
+        logAdapter.submitList(QueryLog.getInstance().snapshot)
+    }
+
+    private fun addToBlocklist(domain: String) {
+        HostsManager.getInstance().addDomain(domain)
+        Toast.makeText(
+            this,
+            getString(R.string.toast_blocked_added, domain),
+            Toast.LENGTH_SHORT
+        ).show()
+        updateLog()
     }
 }
