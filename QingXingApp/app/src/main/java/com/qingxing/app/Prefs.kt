@@ -28,6 +28,7 @@ object Prefs {
     private const val KEY_CARDS = "cards_unlocked"
     private const val KEY_BADGES = "badges"
     private const val KEY_LAST_AWARD_AT = "last_award_at"
+    private const val KEY_LAST_TARGET_OPEN_AT = "last_target_open_at"
 
     /** 超时强退后的冷静期时长（分钟） */
     const val COOLDOWN_MINUTES = 20L
@@ -186,5 +187,13 @@ object Prefs {
 
     fun setLastAwardAt(context: Context, timestamp: Long) {
         sp(context).edit().putLong(KEY_LAST_AWARD_AT, timestamp).apply()
+    }
+
+    /** 上次打开被监控 App 的时间，用来算"间隔了多久没刷" */
+    fun getLastTargetOpenAt(context: Context): Long =
+        sp(context).getLong(KEY_LAST_TARGET_OPEN_AT, 0L)
+
+    fun setLastTargetOpenAt(context: Context, timestamp: Long) {
+        sp(context).edit().putLong(KEY_LAST_TARGET_OPEN_AT, timestamp).apply()
     }
 }

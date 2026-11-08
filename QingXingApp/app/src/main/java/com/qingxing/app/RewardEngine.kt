@@ -12,7 +12,9 @@ data class Reward(
     val levelTitle: String,
     val levelProgress: Int,
     val cardText: String?,
-    val newBadge: String?
+    val newBadge: String?,
+    val cheer: String,
+    val gapBonus: Int
 )
 
 /** 一次超时的惩罚结算结果 */
@@ -54,22 +56,31 @@ object RewardEngine {
     private const val PENALTY_POINTS = 5
     private const val STREAK_BONUS_CAP = 10     // 连击加成封顶天数
     private const val MIN_AWARD_INTERVAL_MS = 60_000L  // 防刷：两次奖励至少间隔 1 分钟
+    private const val GAP_HOUR_MS = 3_600_000L
+    private const val GAP_DAY_MS = 86_400_000L
+    private const val GAP_BONUS_HOUR = 15       // 间隔 ≥ 6 小时的额外奖励
+    private const val GAP_BONUS_DAY = 40        // 间隔 ≥ 24 小时的额外奖励
 
     // ---------- 对外：结算 ----------
 
-    fun awardRestraint(context: Context): Reward {
+    fun awardRestraint(context: Context, gapMs: Long = 0L): Reward {
         val now = System.currentTimeMillis()
-        // 反复"打开→立刻退出"不该刷出积分
+        val streak = Prefs.refreshStreak(context)
+
+        // 反复"打开→立刻退出"不给分，但依然给一句提醒
         if (now - Prefs.getLastAwardAt(context) < MIN_AWARD_INTERVAL_MS) {
-            return silentReward(context)
+            return snapshot(
+                context, gain = 0, isCrit = false, streak = streak,
+                cheer = context.getString(R.string.cheer_short),
+                card = null, badge = null, gapBonus = 0
+            )
         }
         Prefs.setLastAwardAt(context, now)
 
-        val streak = Prefs.refreshStreak(context)
-
+        val gapBonus = gapBonusFor(gapMs)
         val streakBonus = streak.coerceAtMost(STREAK_BONUS_CAP) * 2
         val isCrit = (0 until 100).random() < CRIT_CHANCE
-        var gain = BASE_POINTS + streakBonus
+        var gain = BASE_POINTS + streakBonus + gapBonus
         if (isCrit) gain *= CRIT_MULTIPLIER
 
         Prefs.addPoints(context, gain)
@@ -79,7 +90,56 @@ object RewardEngine {
 
         val card = if (isCrit) unlockCard(context) else null
         val badge = checkNewBadges(context)
+        val cheer = when {
+            gapMs >= GAP_DAY_MS ->
+                context.getString(R.string.cheer_gap_day, formatGap(gapMs))
+            gapMs >= GAP_HOUR_MS ->
+                context.getString(R.string.cheer_gap_hour, formatGap(gapMs))
+            else -> randomCloseQuote(context)
+        }
 
+        return snapshot(
+            context, gain, isCrit, streak, cheer, card, badge, gapBonus
+        )
+    }
+
+    /** 打开目标 App 时随机给一句劝退文案 */
+    fun randomOpenQuote(context: Context): String {
+        val quotes = context.resources.getStringArray(R.array.quotes_open)
+        return quotes[(quotes.indices).random()]
+    }
+
+    fun randomCloseQuote(context: Context): String {
+        val quotes = context.resources.getStringArray(R.array.quotes_close)
+        return quotes[(quotes.indices).random()]
+    }
+
+    /** 把毫秒间隔转成"3 天""5 小时""12 分钟" */
+    fun formatGap(ms: Long): String {
+        val hours = ms / GAP_HOUR_MS
+        return when {
+            hours >= 24 -> "${hours / 24} 天"
+            hours >= 1 -> "$hours 小时"
+            else -> "${(ms / 60_000L).coerceAtLeast(1)} 分钟"
+        }
+    }
+
+    private fun gapBonusFor(gapMs: Long): Int = when {
+        gapMs >= GAP_DAY_MS -> GAP_BONUS_DAY
+        gapMs >= 6 * GAP_HOUR_MS -> GAP_BONUS_HOUR
+        else -> 0
+    }
+
+    private fun snapshot(
+        context: Context,
+        gain: Int,
+        isCrit: Boolean,
+        streak: Int,
+        cheer: String,
+        card: String?,
+        badge: String?,
+        gapBonus: Int
+    ): Reward {
         val points = Prefs.getPoints(context)
         val level = levelOf(points)
         return Reward(
@@ -91,7 +151,9 @@ object RewardEngine {
             levelTitle = LEVEL_TITLES[level],
             levelProgress = progressOf(points, level),
             cardText = card,
-            newBadge = badge
+            newBadge = badge,
+            cheer = cheer,
+            gapBonus = gapBonus
         )
     }
 
@@ -101,23 +163,6 @@ object RewardEngine {
         Prefs.addPoints(context, -lost)
         Prefs.breakStreak(context)
         return Penalty(lost, Prefs.getPoints(context), broken)
-    }
-
-    /** 被防刷拦截时的空结算：不加分、不弹窗 */
-    private fun silentReward(context: Context): Reward {
-        val points = Prefs.getPoints(context)
-        val level = levelOf(points)
-        return Reward(
-            gain = 0,
-            isCrit = false,
-            totalPoints = points,
-            streak = Prefs.getStreak(context),
-            level = level,
-            levelTitle = LEVEL_TITLES[level],
-            levelProgress = progressOf(points, level),
-            cardText = null,
-            newBadge = null
-        )
     }
 
     fun getStatus(context: Context): Status {

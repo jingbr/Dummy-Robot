@@ -31,6 +31,8 @@ class InterceptorService : AccessibilityService() {
     /** 正在等待用户确认意图的目标包名 */
     private var awaitingPkg: String? = null
     private var blockShowing = false
+    /** 距上次打开这类 App 的间隔，用于生成鼓励文案和额外奖励 */
+    private var currentGapMs = 0L
 
     private val ticker = object : Runnable {
         override fun run() {
@@ -110,8 +112,17 @@ class InterceptorService : AccessibilityService() {
     }
 
     private fun showIntentOverlay(pkg: String) {
+        val now = System.currentTimeMillis()
+        val last = Prefs.getLastTargetOpenAt(this)
+        currentGapMs = if (last == 0L) 0L else now - last
+        Prefs.setLastTargetOpenAt(this, now)
+
         overlay.showIntent(
             appLabel = appLabel(pkg),
+            quote = RewardEngine.randomOpenQuote(this),
+            gapText = if (currentGapMs >= 6 * 60 * 60 * 1000L) {
+                getString(R.string.intent_gap, RewardEngine.formatGap(currentGapMs))
+            } else null,
             onPick = { minutes ->
                 awaitingPkg = null
                 overlay.dismissIntent()
@@ -145,13 +156,15 @@ class InterceptorService : AccessibilityService() {
 
     /** 结算一次"放下"的奖励，并把结算卡浮在屏幕上 2.6 秒 */
     private fun awardRestraint(goHome: Boolean) {
-        val reward = RewardEngine.awardRestraint(this)
+        val reward = RewardEngine.awardRestraint(this, currentGapMs)
+        currentGapMs = 0L
         if (goHome) performGlobalAction(GLOBAL_ACTION_HOME)
-        if (reward.gain > 0) overlay.showReward(reward)
+        overlay.showReward(reward)
     }
 
     private fun onSessionTimeout(pkg: String) {
         sessionPkg = null
+        currentGapMs = 0L
         handler.removeCallbacks(ticker)
         overlay.dismissTimer()
         Prefs.bumpTimeouts(this)
@@ -195,6 +208,7 @@ class InterceptorService : AccessibilityService() {
         sessionPkg = null
         awaitingPkg = null
         blockShowing = false
+        currentGapMs = 0L
         handler.removeCallbacksAndMessages(null)
         if (::overlay.isInitialized) overlay.dismissAll()
     }

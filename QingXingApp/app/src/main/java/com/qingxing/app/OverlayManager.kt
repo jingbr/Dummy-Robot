@@ -38,11 +38,19 @@ class OverlayManager(service: AccessibilityService) {
 
     // ---------- 意图确认弹窗 ----------
 
-    fun showIntent(appLabel: String, onPick: (minutes: Int) -> Unit, onExit: () -> Unit) {
+    fun showIntent(
+        appLabel: String,
+        quote: String,
+        gapText: String?,
+        onPick: (minutes: Int) -> Unit,
+        onExit: () -> Unit
+    ) {
         dismissIntent()
         val view = inflater.inflate(R.layout.overlay_intent, null)
         view.findViewById<TextView>(R.id.txtQuestion).text =
             res.getString(R.string.intent_question, appLabel)
+        view.findViewById<TextView>(R.id.txtQuote).text =
+            if (gapText != null) "$gapText\n$quote" else quote
         bindPick(view, R.id.btnMin5, 5, onPick)
         bindPick(view, R.id.btnMin10, 10, onPick)
         bindPick(view, R.id.btnMin15, 15, onPick)
@@ -136,16 +144,22 @@ class OverlayManager(service: AccessibilityService) {
         val view = inflater.inflate(R.layout.overlay_reward, null)
         val card = view.findViewById<View>(R.id.rewardCard)
 
-        view.findViewById<TextView>(R.id.txtGain).text =
-            res.getString(R.string.reward_gain, reward.gain)
-        view.findViewById<TextView>(R.id.txtTag).text =
-            if (reward.isCrit) res.getString(R.string.reward_crit)
+        val gainText = view.findViewById<TextView>(R.id.txtGain)
+        val tagText = view.findViewById<TextView>(R.id.txtTag)
+        if (reward.gain > 0) {
+            gainText.text = res.getString(R.string.reward_gain, reward.gain)
+            tagText.text = if (reward.isCrit) res.getString(R.string.reward_crit)
             else res.getString(R.string.reward_normal)
+        } else {
+            gainText.visibility = View.GONE
+            tagText.visibility = View.GONE
+        }
         view.findViewById<TextView>(R.id.txtStreak).text =
             if (reward.streak > 0) res.getString(R.string.reward_streak, reward.streak)
             else res.getString(R.string.reward_streak_broken)
 
         val cardText = view.findViewById<TextView>(R.id.txtCard)
+        view.findViewById<TextView>(R.id.txtCheer).text = reward.cheer
         reward.cardText?.let {
             cardText.text = res.getString(R.string.reward_card, it)
             cardText.visibility = View.VISIBLE
