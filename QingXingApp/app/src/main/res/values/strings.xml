@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">清醒</string>
+    <string name="service_description">监控短视频类应用的前台状态，打开时进行意图确认，到时后强制退出。</string>
+    <string name="intent_question">你打开 %1$s，是想干什么？</string>
+    <string name="block_timeout">时间到。说好的，放下。</string>
+    <string name="block_cooldown">冷静期还剩一点时间。刚才的份额已经用完了。</string>
+    <string name="timer_format">%1$d:%2$02d</string>
+</resources>
