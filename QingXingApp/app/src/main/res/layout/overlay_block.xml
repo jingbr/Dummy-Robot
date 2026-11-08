@@ -19,9 +19,18 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/txtSub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textColor="#C0392B"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
         android:gravity="center"
         android:text="去喝杯水，或者看看窗外。"
         android:textColor="#777777"

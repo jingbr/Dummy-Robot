@@ -69,9 +69,21 @@ class InterceptorService : AccessibilityService() {
 
         val isTarget = Prefs.getPackages(this).contains(pkg)
 
+        // 阻断屏还在时，底下的 App 仍会不断上报窗口变化，此时不再叠加新的弹窗
+        if (blockShowing) {
+            if (!isTarget) {
+                overlay.dismissBlock()
+                blockShowing = false
+            }
+            return
+        }
+
         // 冷静期内打开目标 App：直接阻断
         if (isTarget && System.currentTimeMillis() < Prefs.getCooldownUntil(this)) {
-            showBlock(getString(R.string.block_cooldown))
+            showBlock(
+                getString(R.string.block_cooldown),
+                getString(R.string.block_sub_cooldown)
+            )
             return
         }
 
@@ -94,10 +106,6 @@ class InterceptorService : AccessibilityService() {
         } else {
             // 离开目标 App
             if (sessionPkg != null) endSession(countAsExit = true)
-            if (blockShowing) {
-                overlay.dismissBlock()
-                blockShowing = false
-            }
         }
     }
 
@@ -112,8 +120,7 @@ class InterceptorService : AccessibilityService() {
             onExit = {
                 awaitingPkg = null
                 overlay.dismissIntent()
-                Prefs.bumpExits(this)
-                performGlobalAction(GLOBAL_ACTION_HOME)
+                awardRestraint(goHome = true)
             }
         )
     }
@@ -132,7 +139,15 @@ class InterceptorService : AccessibilityService() {
         sessionPkg = null
         handler.removeCallbacks(ticker)
         overlay.dismissTimer()
-        if (countAsExit) Prefs.bumpExits(this)
+        // 主动离开目标 App（切到别的应用）也算一次放下，但不强推回桌面
+        if (countAsExit) awardRestraint(goHome = false)
+    }
+
+    /** 结算一次"放下"的奖励，并把结算卡浮在屏幕上 2.6 秒 */
+    private fun awardRestraint(goHome: Boolean) {
+        val reward = RewardEngine.awardRestraint(this)
+        if (goHome) performGlobalAction(GLOBAL_ACTION_HOME)
+        if (reward.gain > 0) overlay.showReward(reward)
     }
 
     private fun onSessionTimeout(pkg: String) {
@@ -140,17 +155,21 @@ class InterceptorService : AccessibilityService() {
         handler.removeCallbacks(ticker)
         overlay.dismissTimer()
         Prefs.bumpTimeouts(this)
+        val penalty = RewardEngine.applyTimeout(this)
         Prefs.setCooldownUntil(
             this,
             System.currentTimeMillis() + Prefs.COOLDOWN_MINUTES * 60_000L
         )
-        showBlock(getString(R.string.block_timeout))
+        showBlock(
+            getString(R.string.block_timeout),
+            getString(R.string.block_sub_timeout, penalty.lost)
+        )
     }
 
-    private fun showBlock(message: String) {
+    private fun showBlock(message: String, subtitle: String) {
         if (blockShowing) return
         blockShowing = true
-        overlay.showBlock(message) {
+        overlay.showBlock(message, subtitle) {
             overlay.dismissBlock()
             blockShowing = false
             performGlobalAction(GLOBAL_ACTION_HOME)

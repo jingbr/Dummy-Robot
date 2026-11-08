@@ -5,5 +5,30 @@
     <string name="intent_question">你打开 %1$s，是想干什么？</string>
     <string name="block_timeout">时间到。说好的，放下。</string>
     <string name="block_cooldown">冷静期还剩一点时间。刚才的份额已经用完了。</string>
+    <string name="block_sub_timeout">−%1$d 清醒分 · 连击已中断</string>
+    <string name="block_sub_cooldown">先去做点别的，让多巴胺降下来</string>
     <string name="timer_format">%1$d:%2$02d</string>
+
+    <string name="reward_gain">+%1$d</string>
+    <string name="reward_crit">暴击 ×3！</string>
+    <string name="reward_normal">清醒分</string>
+    <string name="reward_streak">连续清醒 %1$d 天</string>
+    <string name="reward_streak_broken">从今天重新开始</string>
+    <string name="reward_card">语录卡 · %1$s</string>
+    <string name="reward_badge">解锁徽章：%1$s</string>
+
+    <string-array name="quotes">
+        <item>你省下的 10 分钟，够读完三页书。</item>
+        <item>放下手机的那一刻，时间才真正属于你。</item>
+        <item>信息不等于知识，知识不等于智慧。</item>
+        <item>你不是无聊，你只是在逃避一件更难的事。</item>
+        <item>刷完这一条，世界不会变；读完这一页，你会。</item>
+        <item>多巴胺的廉价版本，换不来真正的满足。</item>
+        <item>今天的克制，是明天的自由。</item>
+        <item>真正稀缺的不是信息，是注意力。</item>
+        <item>手指停下，脑子才能开始转。</item>
+        <item>你刷到的 99%，与你的人生无关。</item>
+        <item>每一次说“不刷了”，都在重塑你的大脑。</item>
+        <item>时间用在哪里，人生就长成什么样子。</item>
+    </string-array>
 </resources>

@@ -2,6 +2,8 @@ package com.qingxing.app
 
 import android.accessibilityservice.AccessibilityService
 import android.graphics.PixelFormat
+import android.os.Handler
+import android.os.Looper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,19 +12,22 @@ import android.widget.Button
 import android.widget.TextView
 
 /**
- * 管理三类浮窗（均为 TYPE_ACCESSIBILITY_OVERLAY，无需悬浮窗权限）：
- * 1. 意图确认弹窗  2. 到时/冷静期阻断屏  3. 右上角倒计时悬浮条
+ * 管理四类浮窗（均为 TYPE_ACCESSIBILITY_OVERLAY，无需悬浮窗权限）：
+ * 1. 意图确认弹窗  2. 到时/冷静期阻断屏  3. 右上角倒计时悬浮条  4. 奖励结算卡
  */
 class OverlayManager(service: AccessibilityService) {
 
     private val wm = service.getSystemService(WindowManager::class.java)
     private val inflater = LayoutInflater.from(service)
     private val res = service.resources
+    private val handler = Handler(Looper.getMainLooper())
 
     private var intentView: View? = null
     private var blockView: View? = null
     private var timerView: View? = null
     private var timerText: TextView? = null
+    private var rewardView: View? = null
+    private val dismissReward = Runnable { removeReward() }
 
     private fun params(width: Int, height: Int, flags: Int) = WindowManager.LayoutParams(
         width, height,
@@ -66,10 +71,11 @@ class OverlayManager(service: AccessibilityService) {
 
     // ---------- 阻断屏 ----------
 
-    fun showBlock(message: String, onExit: () -> Unit) {
+    fun showBlock(message: String, subtitle: String, onExit: () -> Unit) {
         dismissBlock()
         val view = inflater.inflate(R.layout.overlay_block, null)
         view.findViewById<TextView>(R.id.txtBlock).text = message
+        view.findViewById<TextView>(R.id.txtSub).text = subtitle
         view.findViewById<Button>(R.id.btnHome).setOnClickListener { onExit() }
 
         val p = params(
@@ -119,12 +125,74 @@ class OverlayManager(service: AccessibilityService) {
         timerText = null
     }
 
+    // ---------- 奖励结算卡 ----------
+
+    /**
+     * 放下手机后的即时反馈。刻意做成不可点击、2.6 秒自动消失，
+     * 避免"奖励页"本身变成新的刷屏时间。
+     */
+    fun showReward(reward: Reward) {
+        removeReward()
+        val view = inflater.inflate(R.layout.overlay_reward, null)
+        val card = view.findViewById<View>(R.id.rewardCard)
+
+        view.findViewById<TextView>(R.id.txtGain).text =
+            res.getString(R.string.reward_gain, reward.gain)
+        view.findViewById<TextView>(R.id.txtTag).text =
+            if (reward.isCrit) res.getString(R.string.reward_crit)
+            else res.getString(R.string.reward_normal)
+        view.findViewById<TextView>(R.id.txtStreak).text =
+            if (reward.streak > 0) res.getString(R.string.reward_streak, reward.streak)
+            else res.getString(R.string.reward_streak_broken)
+
+        val cardText = view.findViewById<TextView>(R.id.txtCard)
+        reward.cardText?.let {
+            cardText.text = res.getString(R.string.reward_card, it)
+            cardText.visibility = View.VISIBLE
+        }
+
+        val badgeText = view.findViewById<TextView>(R.id.txtBadge)
+        reward.newBadge?.let {
+            badgeText.text = res.getString(R.string.reward_badge, it)
+            badgeText.visibility = View.VISIBLE
+        }
+
+        val p = params(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+        ).apply { gravity = Gravity.TOP }
+
+        addView(view, p)
+        rewardView = view
+
+        card.alpha = 0f
+        card.scaleX = 0.85f
+        card.scaleY = 0.85f
+        card.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(180).start()
+
+        handler.postDelayed(dismissReward, 2600L)
+    }
+
+    fun removeReward() {
+        handler.removeCallbacks(dismissReward)
+        rewardView?.let { view ->
+            view.animate().alpha(0f).setDuration(200).withEndAction {
+                removeView(view)
+            }.start()
+        }
+        rewardView = null
+    }
+
     // ---------- 工具 ----------
 
     fun dismissAll() {
         dismissIntent()
         dismissBlock()
         dismissTimer()
+        removeReward()
     }
 
     private fun addView(view: View, p: WindowManager.LayoutParams) {
