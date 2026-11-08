@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/QingXingApp/app/src/main/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/QingXingApp/app/src/main/res"><file path="/workspace/QingXingApp/app/src/main/res/values/strings.xml" qualifiers=""><string name="app_name">清醒</string><string name="service_description">监控短视频类应用的前台状态，打开时进行意图确认，到时后强制退出。</string><string name="intent_question">你打开 %1$s，是想干什么？</string><string name="intent_gap">距上次打开它，已经 %1$s 了。</string><string name="block_timeout">时间到。说好的，放下。</string><string name="block_cooldown">冷静期还剩一点时间。刚才的份额已经用完了。</string><string name="block_sub_timeout">−%1$d 清醒分 · 连击已中断</string><string name="block_sub_cooldown">先去做点别的，让多巴胺降下来</string><string name="timer_format">%1$d:%2$02d</string><string name="reward_gain">+%1$d</string><string name="reward_crit">暴击 ×3！</string><string name="reward_normal">清醒分</string><string name="reward_streak">连续清醒 %1$d 天</string><string name="reward_streak_broken">从今天重新开始</string><string name="reward_card">语录卡 · %1$s</string><string name="reward_badge">解锁徽章：%1$s</string><string name="cheer_short">刚说再见又回来了。深呼吸三次，再决定。</string><string name="cheer_gap_day">已经整整 %1$s 没打开它了，你比自己想象的更自由。</string><string name="cheer_gap_hour">距上次打开 %1$s，这次的克制尤其珍贵。</string><string-array name="quotes_open">
+        <item>打开很容易，关上才需要力气。</item>
+        <item>你真正想找的东西，不在这条信息流里。</item>
+        <item>这 10 分钟，你原本打算用来做什么？</item>
+        <item>先想清楚：你要的是放松，还是逃避？</item>
+        <item>手指比脑子快，但决定权在脑子。</item>
+        <item>屏幕里很热闹，你的生活更需要你。</item>
+        <item>你已经无数次从这里空手而归了。</item>
+        <item>刷完这一屏，你会更累还是更轻松？</item>
+        <item>现在退出，还来得及。</item>
+        <item>你打开它，是为了什么？想好了再点。</item>
+    </string-array><string-array name="quotes_close">
+        <item>你刚刚赢了一小局。</item>
+        <item>每一次说不，都是在给未来的自己让路。</item>
+        <item>放下它的那一刻，你拿回了自己的时间。</item>
+        <item>这一分钟，你活在自己的生活里。</item>
+        <item>克制不会立刻见效，但一定会累积。</item>
+        <item>真正的自由，是能随时停下来。</item>
+        <item>很好，继续。别急着回去。</item>
+        <item>你比刚才多了一点点掌控感。</item>
+        <item>大脑正在重新习惯“无聊”，这是好事。</item>
+        <item>你的注意力，值钱得很。</item>
+        <item>这一步很小，但方向对了。</item>
+        <item>现在去做那件一直拖着的事吧。</item>
+    </string-array><string-array name="quotes">
+        <item>你省下的 10 分钟，够读完三页书。</item>
+        <item>放下手机的那一刻，时间才真正属于你。</item>
+        <item>信息不等于知识，知识不等于智慧。</item>
+        <item>你不是无聊，你只是在逃避一件更难的事。</item>
+        <item>刷完这一条，世界不会变；读完这一页，你会。</item>
+        <item>多巴胺的廉价版本，换不来真正的满足。</item>
+        <item>今天的克制，是明天的自由。</item>
+        <item>真正稀缺的不是信息，是注意力。</item>
+        <item>手指停下，脑子才能开始转。</item>
+        <item>你刷到的 99%，与你的人生无关。</item>
+        <item>每一次说“不刷了”，都在重塑你的大脑。</item>
+        <item>时间用在哪里，人生就长成什么样子。</item>
+    </string-array></file><file path="/workspace/QingXingApp/app/src/main/res/values/themes.xml" qualifiers=""><style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:colorAccent">#4A6741</item>
+        <item name="android:statusBarColor">#4A6741</item>
+    </style></file><file name="overlay_block" path="/workspace/QingXingApp/app/src/main/res/layout/overlay_block.xml" qualifiers="" type="layout"/><file name="overlay_reward" path="/workspace/QingXingApp/app/src/main/res/layout/overlay_reward.xml" qualifiers="" type="layout"/><file name="activity_main" path="/workspace/QingXingApp/app/src/main/res/layout/activity_main.xml" qualifiers="" type="layout"/><file name="overlay_timer" path="/workspace/QingXingApp/app/src/main/res/layout/overlay_timer.xml" qualifiers="" type="layout"/><file name="overlay_intent" path="/workspace/QingXingApp/app/src/main/res/layout/overlay_intent.xml" qualifiers="" type="layout"/><file name="accessibility_service_config" path="/workspace/QingXingApp/app/src/main/res/xml/accessibility_service_config.xml" qualifiers="" type="xml"/><file name="bg_hero" path="/workspace/QingXingApp/app/src/main/res/drawable/bg_hero.xml" qualifiers="" type="drawable"/><file name="bg_timer" path="/workspace/QingXingApp/app/src/main/res/drawable/bg_timer.xml" qualifiers="" type="drawable"/><file name="ic_launcher" path="/workspace/QingXingApp/app/src/main/res/drawable/ic_launcher.xml" qualifiers="" type="drawable"/><file name="bg_card" path="/workspace/QingXingApp/app/src/main/res/drawable/bg_card.xml" qualifiers="" type="drawable"/></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/QingXingApp/app/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/QingXingApp/app/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/QingXingApp/app/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/QingXingApp/app/build/generated/res/resValues/debug"/></dataSet><mergedItems/></merger>

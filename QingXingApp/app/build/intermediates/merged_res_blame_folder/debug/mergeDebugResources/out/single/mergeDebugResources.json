@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "com.qingxing.app-debug-4:/layout_overlay_intent.xml.flat",
+        "source": "com.qingxing.app-main-6:/layout/overlay_intent.xml"
+    },
+    {
+        "merged": "com.qingxing.app-debug-4:/layout_overlay_block.xml.flat",
+        "source": "com.qingxing.app-main-6:/layout/overlay_block.xml"
+    },
+    {
+        "merged": "com.qingxing.app-debug-4:/layout_overlay_reward.xml.flat",
+        "source": "com.qingxing.app-main-6:/layout/overlay_reward.xml"
+    },
+    {
+        "merged": "com.qingxing.app-debug-4:/drawable_ic_launcher.xml.flat",
+        "source": "com.qingxing.app-main-6:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "com.qingxing.app-debug-4:/drawable_bg_timer.xml.flat",
+        "source": "com.qingxing.app-main-6:/drawable/bg_timer.xml"
+    },
+    {
+        "merged": "com.qingxing.app-debug-4:/layout_overlay_timer.xml.flat",
+        "source": "com.qingxing.app-main-6:/layout/overlay_timer.xml"
+    },
+    {
+        "merged": "com.qingxing.app-debug-4:/drawable_bg_hero.xml.flat",
+        "source": "com.qingxing.app-main-6:/drawable/bg_hero.xml"
+    },
+    {
+        "merged": "com.qingxing.app-debug-4:/drawable_bg_card.xml.flat",
+        "source": "com.qingxing.app-main-6:/drawable/bg_card.xml"
+    },
+    {
+        "merged": "com.qingxing.app-debug-4:/layout_activity_main.xml.flat",
+        "source": "com.qingxing.app-main-6:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.qingxing.app-debug-4:/xml_accessibility_service_config.xml.flat",
+        "source": "com.qingxing.app-main-6:/xml/accessibility_service_config.xml"
+    }
+]

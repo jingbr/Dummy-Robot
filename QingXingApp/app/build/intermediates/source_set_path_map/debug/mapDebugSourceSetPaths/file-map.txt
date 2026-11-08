@@ -1,0 +1,7 @@
+com.qingxing.app-pngs-0 /workspace/QingXingApp/app/build/generated/res/pngs/debug
+com.qingxing.app-resValues-1 /workspace/QingXingApp/app/build/generated/res/resValues/debug
+com.qingxing.app-packageDebugResources-2 /workspace/QingXingApp/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.qingxing.app-packageDebugResources-3 /workspace/QingXingApp/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.qingxing.app-debug-4 /workspace/QingXingApp/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.qingxing.app-debug-5 /workspace/QingXingApp/app/src/debug/res
+com.qingxing.app-main-6 /workspace/QingXingApp/app/src/main/res

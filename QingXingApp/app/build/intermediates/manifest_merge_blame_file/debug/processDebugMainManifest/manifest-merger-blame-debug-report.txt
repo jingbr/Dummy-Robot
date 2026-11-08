@@ -1,0 +1,69 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.qingxing.app"
+4    android:versionCode="1"
+5    android:versionName="0.1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="34" />
+10
+11    <application
+11-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:4:5-32:19
+12        android:allowBackup="false"
+12-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:5:9-36
+13        android:debuggable="true"
+14        android:extractNativeLibs="false"
+15        android:icon="@drawable/ic_launcher"
+15-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:6:9-45
+16        android:label="@string/app_name"
+16-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:7:9-41
+17        android:theme="@style/AppTheme" >
+17-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:8:9-40
+18        <activity
+18-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:10:9-17:20
+19            android:name="com.qingxing.app.MainActivity"
+19-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:11:13-41
+20            android:exported="true" >
+20-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:12:13-36
+21            <intent-filter>
+21-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:13:13-16:29
+22                <action android:name="android.intent.action.MAIN" />
+22-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:14:17-69
+22-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:14:25-66
+23
+24                <category android:name="android.intent.category.LAUNCHER" />
+24-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:15:17-77
+24-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:15:27-74
+25            </intent-filter>
+26        </activity>
+27
+28        <!--
+29             无障碍服务：监控前台 App、弹出拦截浮窗、超时后执行全局返回桌面。
+30             使用 TYPE_ACCESSIBILITY_OVERLAY，无需申请悬浮窗权限。
+31        -->
+32        <service
+32-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:21:9-31:19
+33            android:name="com.qingxing.app.InterceptorService"
+33-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:22:13-47
+34            android:exported="true"
+34-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:23:13-36
+35            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+35-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:24:13-79
+36            <intent-filter>
+36-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:25:13-27:29
+37                <action android:name="android.accessibilityservice.AccessibilityService" />
+37-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:26:17-92
+37-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:26:25-89
+38            </intent-filter>
+39
+40            <meta-data
+40-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:28:13-30:72
+41                android:name="android.accessibilityservice"
+41-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:29:17-60
+42                android:resource="@xml/accessibility_service_config" />
+42-->/workspace/QingXingApp/app/src/main/AndroidManifest.xml:30:17-69
+43        </service>
+44    </application>
+45
+46</manifest>

@@ -1,0 +1,71 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:2:1-33:12
+INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:2:1-33:12
+INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:2:1-33:12
+INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:2:1-33:12
+	package
+		INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:2:11-69
+application
+ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:4:5-32:19
+INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:4:5-32:19
+	android:extractNativeLibs
+		INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml
+	android:label
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:7:9-41
+	android:icon
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:6:9-45
+	android:allowBackup
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:5:9-36
+	android:theme
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:8:9-40
+activity#com.qingxing.app.MainActivity
+ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:10:9-17:20
+	android:exported
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:12:13-36
+	android:name
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:11:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:13:13-16:29
+action#android.intent.action.MAIN
+ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:14:17-69
+	android:name
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:14:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:15:17-77
+	android:name
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:15:27-74
+service#com.qingxing.app.InterceptorService
+ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:21:9-31:19
+	android:exported
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:23:13-36
+	android:permission
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:24:13-79
+	android:name
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:22:13-47
+intent-filter#action:name:android.accessibilityservice.AccessibilityService
+ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:25:13-27:29
+action#android.accessibilityservice.AccessibilityService
+ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:26:17-92
+	android:name
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:26:25-89
+meta-data#android.accessibilityservice
+ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:28:13-30:72
+	android:resource
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:30:17-69
+	android:name
+		ADDED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml:29:17-60
+uses-sdk
+INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml
+INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /workspace/QingXingApp/app/src/main/AndroidManifest.xml
